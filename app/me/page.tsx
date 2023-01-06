@@ -8,7 +8,21 @@ import Link from 'next/link'
 import IconHide from '../../components/icon-hide'
 import IconShow from '../../components/icon-show'
 // Reference: https://ngcash.notion.site/Processo-Seletivo-NG-TRYBE-223de32e1ed047f2aa90cc0da84754ee
-
+/**
+ * 
+ * Next in training:
+ * React Query
+ * Redux
+ * Jest and testing libraries
+ * Cypress
+ * Microfront End
+ * SASS and SCSS
+ * 
+ * Express
+ * PostgreSQL?
+ * Prisma ORM?
+ * 
+ */
 const balance_data = {
 	show_balance: true,
 	balance: 10000,
