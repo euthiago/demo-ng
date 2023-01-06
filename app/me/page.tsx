@@ -15,7 +15,7 @@ import IconShow from '../../components/icon-show'
  * Redux
  * Jest and testing libraries
  * Cypress
- * Microfront End
+ * Microfront End (Single SPA)
  * SASS and SCSS
  * 
  * Express
