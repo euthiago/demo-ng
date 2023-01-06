@@ -9,7 +9,8 @@ export default function Page(){
 
 	let [ { username, password }, setUser ] = useState({ username:"", password:"" })
 
-	const loginUser = () => {
+	const loginUser = ( evt:React.FormEvent) => {
+		evt.preventDefault()
 		console.log(username, password)
 	}
 
@@ -25,16 +26,16 @@ export default function Page(){
 			<p className="text-center font-semibold border-b-2">Your next gen money transfer app</p>
 			<form className="py-4" onSubmit={ loginUser }>
 				<div className="mb-4">
-					<label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
+					<label className="block text-gray-500 text-sm font-bold mb-2" htmlFor="username">
 						Username
 					</label>
-					<input value={username} onChange={usernameChange} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username" />
+					<input value={username} onChange={usernameChange} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-500 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" placeholder="Username" />
 				</div>
 				<div className="mb-4">
-					<label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+					<label className="block text-gray-500 text-sm font-bold mb-2" htmlFor="password">
 						Password
 					</label>
-					<input value={password} onChange={passwordChange}  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************" />
+					<input value={password} onChange={passwordChange}  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-500 mb-1 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************" />
 				</div>
 				<div className="flex items-center justify-between">
 					<Button className="grow">Sign-in</Button>
