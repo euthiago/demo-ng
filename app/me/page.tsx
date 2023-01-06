@@ -5,10 +5,12 @@
  */
 import Head from 'next/head'
 import Link from 'next/link'
+import IconHide from '../../components/icon-hide'
+import IconShow from '../../components/icon-show'
 // Reference: https://ngcash.notion.site/Processo-Seletivo-NG-TRYBE-223de32e1ed047f2aa90cc0da84754ee
 
-const user_data = {
-	name: "Fulano de Tal",
+const balance_data = {
+	show_balance: true,
 	balance: 10000,
 	recent_transactions: [
 		{
@@ -29,13 +31,16 @@ const user_data = {
 	]
 }
 
-let recent = user_data.recent_transactions.map( (transaction, index) => (
+let recent = balance_data.recent_transactions.map( (transaction, index) => (
 	<div key={index}>
 		<div>{transaction.date.toLocaleDateString("pt-BR")}</div>
 		<div>{transaction.ammount}</div>
 	</div>
 ))
-	
+
+const format_balance = (balance:number) => 
+	new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(balance)
+
 export default function Me() {
 
   return (
@@ -48,11 +53,20 @@ export default function Me() {
       </Head>
       <div>
 		
-		<div>{user_data.name}</div>
+		<div className='grid grid-cols-[1fr_auto] font-bold text-gray-700 items-center'>
+			<div className="text-3xl" >
+				{ format_balance(balance_data.balance) }
+			</div>
+			<div className='cursor-pointer text-gray-500 hover:text-gray-800'>
+				{ 
+					balance_data.show_balance 
+					? <IconHide />
+					: <IconShow />
+				}
+			</div>
+		</div>
 
-		<div>{user_data.balance}</div>
-
-		<div>{ recent }</div>
+		<div className='pt-5 pb-5'>{ recent }</div>
 
 		<div><Link href="/me/transactions">Ver todas</Link></div>
 
