@@ -2,6 +2,10 @@
  * 
  * User Page
  * 
+ * PS: Too many problems with the new app directory
+ * and the --turbo option... 
+ * Just finish the project using next 12 stuff
+ * 
  */
 import Head from 'next/head'
 import Link from 'next/link'
@@ -54,6 +58,7 @@ let recent = balance_data.recent_transactions.map( (transaction, index) => (
 
 const format_balance = (balance:number) => 
 	new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(balance)
+
 
 export default function Me() {
 

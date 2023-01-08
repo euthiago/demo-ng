@@ -4,14 +4,35 @@ import Link from "next/link"
 import LoggedOutLayout from "./home/layout"
 import Button from "../components/button"
 import { useState } from "react"
+import Router from "next/router"
+
+
+const login = async ({ username, password }: {username:string, password:string }) => {
+
+	let body = new FormData()
+	body.set("username", username)
+	body.set("password", password)
+
+	try{
+		let res = await fetch("/api/login", { body, method:"POST" })
+		return res.json()
+	}catch(e){
+		return { success: false }
+	}
+
+}
 
 export default function Page(){
 
-	let [ { username, password }, setUser ] = useState({ username:"", password:"" })
+	let [ { username, password, logging }, setUser ] = useState({ username:"", password:"", logging:false })
 
-	const loginUser = ( evt:React.FormEvent) => {
+	const loginUser = async ( evt:React.FormEvent) => {
+		if(logging) return
+		setUser( user => ({...user, logging:true }))
 		evt.preventDefault()
-		console.log(username, password)
+		let res = await login({username, password})
+		if(window && res.success) document.location = "/me"
+		setUser( user => ({...user, logging: false }))
 	}
 
 	const usernameChange = ( evt:React.ChangeEvent<HTMLInputElement> ) => 
@@ -20,7 +41,6 @@ export default function Page(){
 	const passwordChange = ( evt:React.ChangeEvent<HTMLInputElement> ) => 
 		setUser( user => ({...user, password: evt.target.value }))
 	
-
 	return <LoggedOutLayout>
 		<div>
 			<p className="text-center font-semibold border-b-2">Your next gen money transfer app</p>
@@ -38,7 +58,7 @@ export default function Page(){
 					<input value={password} onChange={passwordChange}  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-500 mb-1 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="******************" />
 				</div>
 				<div className="flex items-center justify-between">
-					<Button className="grow">Sign-in</Button>
+					<Button className="grow" type="submit" disabled={logging}>Sign-in</Button>
 				</div>
 				<p className="text-center text-sm p-2">
 					-- or --
