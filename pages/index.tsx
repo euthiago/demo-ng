@@ -71,7 +71,6 @@ export default function Page(){
 		</form>
 	</div>
 	
-
 }
 
 Page.getLayout = ( page:ReactElement ) =>

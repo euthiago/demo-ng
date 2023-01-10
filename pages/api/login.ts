@@ -20,7 +20,7 @@ const corsMiddleware = (req:NextApiRequest, res: NextApiResponse) =>
 	})
 
 const N_AVATARS = 2
-const handler = async (req:NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
 	await corsMiddleware(req, res)
 

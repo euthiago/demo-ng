@@ -14,6 +14,7 @@ import IconHide from '../../components/icon-hide'
 import IconShow from '../../components/icon-show'
 import LoggedInLayout from '../../components/layouts/logged-in'
 import nookies from 'nookies'
+import { withIronSsr } from '../../lib/session'
 // Reference: https://ngcash.notion.site/Processo-Seletivo-NG-TRYBE-223de32e1ed047f2aa90cc0da84754ee
 /**
  * 
@@ -77,7 +78,7 @@ export default function Me({ cookies }) {
 		<div className='grid grid-cols-[1fr_auto] font-bold text-gray-700 items-center'>
 			<div className="text-3xl" >
 				{Object.keys(cookies).map( (k, key) => 
-					<p>{k}:{cookies[k]}</p>
+					<p key={key}>{k}:{cookies[k]}</p>
 				)}
 				{ format_balance(balance_data.balance) }
 			</div>
@@ -103,11 +104,10 @@ Me.getLayout = (page:ReactElement) =>
 	<LoggedInLayout>{ page }</LoggedInLayout>
 
 
-export async function getServerSideProps(ctx){
+export const getServerSideProps = withIronSsr(({ req }) => {
 
-	const cookies = nookies.get(ctx)
-	console.log(cookies) 
+	const { user } = req.session
+	console.log(user)
+	return { props: { user } } 
 
-	return { props: { cookies } } 
-
-}
+})
