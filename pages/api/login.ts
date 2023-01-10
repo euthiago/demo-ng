@@ -28,6 +28,7 @@ const handler = async (req:NextApiRequest, res: NextApiResponse) => {
 	const avatar_id = Math.floor(Math.random()*1000) % N_AVATARS
 
 	req.session.user = {
+		isLoggedIn: true,
 		username: "Authenticated User",
 		avatar: `/stbdif${ avatar_id }.jpg`
 	}

@@ -9,8 +9,11 @@
  */
 import Head from 'next/head'
 import Link from 'next/link'
+import { ReactElement } from 'react'
 import IconHide from '../../components/icon-hide'
 import IconShow from '../../components/icon-show'
+import LoggedInLayout from '../../components/layouts/logged-in'
+import nookies from 'nookies'
 // Reference: https://ngcash.notion.site/Processo-Seletivo-NG-TRYBE-223de32e1ed047f2aa90cc0da84754ee
 /**
  * 
@@ -60,8 +63,8 @@ const format_balance = (balance:number) =>
 	new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(balance)
 
 
-export default function Me() {
-
+export default function Me({ cookies }) {
+	console.log("component cookies", cookies)
   return (
     <>
       <Head>
@@ -71,9 +74,11 @@ export default function Me() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div>
-		
 		<div className='grid grid-cols-[1fr_auto] font-bold text-gray-700 items-center'>
 			<div className="text-3xl" >
+				{Object.keys(cookies).map( (k, key) => 
+					<p>{k}:{cookies[k]}</p>
+				)}
 				{ format_balance(balance_data.balance) }
 			</div>
 			<div className='cursor-pointer text-gray-500 hover:text-gray-800'>
@@ -92,4 +97,17 @@ export default function Me() {
 	  </div>
     </>
   )
+}
+
+Me.getLayout = (page:ReactElement) => 
+	<LoggedInLayout>{ page }</LoggedInLayout>
+
+
+export async function getServerSideProps(ctx){
+
+	const cookies = nookies.get(ctx)
+	console.log(cookies) 
+
+	return { props: { cookies } } 
+
 }
