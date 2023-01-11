@@ -104,10 +104,11 @@ Me.getLayout = (page:ReactElement) =>
 	<LoggedInLayout>{ page }</LoggedInLayout>
 
 
-export const getServerSideProps = withIronSsr(({ req }) => {
+export const getServerSideProps = withIronSsr(({ req , res }) => {
 
-	const { user } = req.session
+	const { user=null } = req.session
 	console.log(user)
+
 	return { props: { user } } 
 
 })
