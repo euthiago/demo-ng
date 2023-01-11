@@ -4,6 +4,7 @@ import Link from "next/link"
 import Button from "../components/button"
 import { ReactElement, useState } from "react"
 import LoggedOutLayout from "../components/layouts/logged-out"
+import { withIronSsr } from "../lib/session"
 
 
 const login = async ({ username, password }: {username:string, password:string }) => {
@@ -21,8 +22,9 @@ const login = async ({ username, password }: {username:string, password:string }
 
 }
 
-export default function Page(){
+export default function Page({ user }){
 
+	console.log(user)
 	let [ { username, password, logging }, setUser ] = useState({ username:"", password:"", logging:false })
 
 	const loginUser = async ( evt:React.FormEvent) => {
@@ -75,3 +77,12 @@ export default function Page(){
 
 Page.getLayout = ( page:ReactElement ) =>
 	<LoggedOutLayout>{page}</LoggedOutLayout>
+
+
+export const getServerSideProps = withIronSsr(({ req }) => {
+
+	const { user=null } = req.session
+	console.log(user)
+	return { props: { user } } 
+
+})
