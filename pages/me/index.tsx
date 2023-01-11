@@ -64,8 +64,8 @@ const format_balance = (balance:number) =>
 	new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(balance)
 
 
-export default function Me({ cookies }) {
-	console.log("component cookies", cookies)
+export default function Me({ user }) {
+	console.log("user from ssr", user)
   return (
     <>
       <Head>
@@ -77,9 +77,6 @@ export default function Me({ cookies }) {
       <div>
 		<div className='grid grid-cols-[1fr_auto] font-bold text-gray-700 items-center'>
 			<div className="text-3xl" >
-				{Object.keys(cookies).map( (k, key) => 
-					<p key={key}>{k}:{cookies[k]}</p>
-				)}
 				{ format_balance(balance_data.balance) }
 			</div>
 			<div className='cursor-pointer text-gray-500 hover:text-gray-800'>
