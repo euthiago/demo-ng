@@ -1,4 +1,4 @@
-import { ReactNode } from "react"
+import { PointerEvent, ReactNode } from "react"
 import { twMerge } from "tailwind-merge"
 
 type ButtonKind = "primary" | "secondary" 
@@ -9,7 +9,8 @@ export default function Button({
 		containerClassName='',
 		kind="primary",
 		disabled=false,
-		type="button"
+		type="button",
+		onPointerUp=()=>{}
 	}:{
 		children:ReactNode,
 		className?:string,
@@ -17,10 +18,11 @@ export default function Button({
 		kind?:ButtonKind,
 		disabled?:boolean,
 		type?:"button" | "submit" | "reset" | undefined
+		onPointerUp?: (evt:PointerEvent) => void
 	}){
 
 	return (
-		<button disabled={disabled} type={type} className={
+		<button onPointerUp={onPointerUp} disabled={disabled} type={type} className={
 			twMerge(
 				kind === "primary" ? "bg-black  text-white" : "border-gray-700 border-2",
 				"hover:shadow-md hover:bg-slate-900 hover:text-white font-bold rounded focus:outline-none focus:shadow-outline", 

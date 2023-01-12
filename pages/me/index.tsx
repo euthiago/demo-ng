@@ -9,12 +9,12 @@
  */
 import Head from 'next/head'
 import Link from 'next/link'
-import { ReactElement } from 'react'
+import { ReactElement, ReactNode } from 'react'
 import IconHide from '../../components/icon-hide'
 import IconShow from '../../components/icon-show'
 import LoggedInLayout from '../../components/layouts/logged-in'
-import nookies from 'nookies'
 import { withIronSsr } from '../../lib/session'
+import { MaybeUser } from '../../lib/user'
 // Reference: https://ngcash.notion.site/Processo-Seletivo-NG-TRYBE-223de32e1ed047f2aa90cc0da84754ee
 /**
  * 
@@ -64,7 +64,7 @@ const format_balance = (balance:number) =>
 	new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(balance)
 
 
-export default function Me({ user }) {
+export default function Me({ user }:{user:MaybeUser}) {
 	console.log("user from ssr", user)
   return (
     <>
@@ -97,15 +97,16 @@ export default function Me({ user }) {
   )
 }
 
-Me.getLayout = (page:ReactElement) => 
+
+type propType = { children: ReactElement }
+Me.getLayout = ( page: ReactNode ) => 
 	<LoggedInLayout>{ page }</LoggedInLayout>
 
 
-export const getServerSideProps = withIronSsr(({ req , res }) => {
+export const getServerSideProps = withIronSsr(({ req, res }) => {
 
 	const { user=null } = req.session
 	console.log(user)
-
 	return { props: { user } } 
 
 })

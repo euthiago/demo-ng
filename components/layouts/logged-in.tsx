@@ -1,10 +1,9 @@
 import Head from 'next/head'
-import { useUser } from '../../lib/user'
+import { withIronSsr } from '../../lib/session'
+import { MaybeUser } from '../../lib/user'
 
-export default function LoggedInLayout({ children }: { children: React.ReactNode } ){
+export default function LoggedInLayout({ children, user }: { children: React.ReactNode, user:MaybeUser } ){
 	
-	const { username } = useUser()
-
 	return (
 		<>
 			<Head>
@@ -14,14 +13,20 @@ export default function LoggedInLayout({ children }: { children: React.ReactNode
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<main className={" bg-slate-700 h-screen w-screen text-gray-700"}>
-				<div>User: {username}</div>
+				<div>User: { user?.username }</div>
 				<div className="grid place-items-center p-6 w-full h-full ">
 					<div className="w-80 min-h-fit p-6 pt-10 bg-white box-border rounded-xl shadow-2xl">
 						{ children }
 					</div>
 				</div>
-				
 			</main>
 		</>
 	);
 }
+
+export const getServerSideProps = withIronSsr(({ req }) => {
+
+	const user:MaybeUser = req.session.user || null
+	return { props: { user } } 
+
+})

@@ -15,7 +15,6 @@ type AppPropsWithLayout = AppProps & {
 import { Inter } from '@next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
-
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
 	const getLayout = Component.getLayout ?? ( (page:ReactElement) => page)
